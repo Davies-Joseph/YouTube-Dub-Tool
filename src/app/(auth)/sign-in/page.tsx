@@ -97,21 +97,3 @@ export default async function SignInPage({ searchParams }: LoginProps) {
     </>
   );
 }
-
-export const signInAction = async (formData: FormData) => {
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
-  const redirectTo = formData.get("redirect") as string;
-  const supabase = await createClient();
-
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-
-  if (error) {
-    return encodedRedirect("error", "/sign-in", error.message);
-  }
-
-  return redirect(redirectTo || "/dashboard");
-};
